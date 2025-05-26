@@ -5,13 +5,7 @@
 // tel them if they have won
 // restart game
 
-let humanScore = 0;
-let computerScore = 0;
-
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
-playRound(humanSelection, computerSelection);
+playGame();
 
 function getComputerChoice() {
     let choice = "";
@@ -35,51 +29,82 @@ function getHumanChoice() {
     return choice;
 }
 
-function playRound(humanChoice, computerChoice) {
-    humanChoice = humanChoice.toLowerCase();
-    computerChoice = computerChoice.toLowerCase();
-    let winner = null;
-    let messageCode = null;
+function playGame() {
+    const roundAmount = 5;
+    let humanScore = 0;
+    let computerScore = 0;
+    for (let currentRound = 1; currentRound <= roundAmount; currentRound++) {
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
 
-    if (humanChoice === "rock") {
-        switch (computerChoice) {
-            case "rock":
-                winner = "draw";
-                break;
-            case "paper":
-                winner = "computer";
-                break;
-            case "scissors":
-                winner = "human";
-                break;
-        }
-    } else if (humanChoice === "paper") {
-        switch (computerChoice) {
-            case "rock":
-                winner = "human";
-                break;
-            case "paper":
-                winner = "draw";
-                break;
-            case "scissors":
-                winner = "computer";
-                break;
-        }
-    } else if (humanChoice === "scissors") {
-            switch (computerChoice) {
-            case "rock":
-                winner = "computer";
-                break;
-            case "paper":
-                winner = "human";
-                break;
-            case "scissors":
-                winner = "draw";
-                break;
-        }
+        playRound(humanSelection, computerSelection);
+
+        console.log(currentRound);
+        
     }
-    console.log(humanChoice + " " + computerChoice + " Winner: " + winner);
-    
 
+    function playRound(humanChoice, computerChoice) {
+        humanChoice = humanChoice.toLowerCase();
+        computerChoice = computerChoice.toLowerCase();
+        let winner = null;
+        let messageCode = null;
+
+        if (humanChoice === "rock") {
+            switch (computerChoice) {
+                case "rock":
+                    winner = "draw";
+                    break;
+                case "paper":
+                    winner = "computer";
+                    break;
+                case "scissors":
+                    winner = "human";
+                    break;
+            }
+        } else if (humanChoice === "paper") {
+            switch (computerChoice) {
+                case "rock":
+                    winner = "human";
+                    break;
+                case "paper":
+                    winner = "draw";
+                    break;
+                case "scissors":
+                    winner = "computer";
+                    break;
+            }
+        } else if (humanChoice === "scissors") {
+                switch (computerChoice) {
+                case "rock":
+                    winner = "computer";
+                    break;
+                case "paper":
+                    winner = "human";
+                    break;
+                case "scissors":
+                    winner = "draw";
+                    break;
+            }
+        }
+        
+        // Set winning message, and assign points based on who won
+        let winnerMessage = "";
+        switch (winner) {
+            case "human":
+                ++humanScore
+                winnerMessage = `You win!\n${humanChoice.toUpperCase()} beats ${computerChoice.toUpperCase()}!\nCurrent Score: Human: ${humanScore} | Computer ${computerScore}`
+                break;
+            case "computer":
+                ++computerScore
+                winnerMessage = `You lose!\n${computerChoice.toUpperCase()} beats ${humanChoice.toUpperCase()}!\nCurrent Score: Human: ${humanScore} | Computer ${computerScore}`
+                break;
+            case "draw":
+                winnerMessage = `It's a draw!\nCurrent Score: Human: ${humanScore} | Computer ${computerScore}`
+                break;
+        }
+
+        console.log(winnerMessage);
+        
+    }
 }
 

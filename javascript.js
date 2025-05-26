@@ -39,7 +39,15 @@ function playGame() {
 
         playRound(humanSelection, computerSelection);
 
-        console.log(currentRound);
+        if (currentRound == 5) {
+            if (humanScore > computerScore) {
+                console.log(`You win with a score of ${humanScore} to ${computerScore}`);
+            } else if (humanScore < computerScore) {
+                console.log(`You lose with a score of ${computerScore} to ${humanScore}`);
+            } else if (humanScore == computerScore) {
+                console.log(`It's a draw with a score of ${humanScore} to ${computerScore}`);
+            }
+        }
         
     }
 

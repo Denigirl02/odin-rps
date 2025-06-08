@@ -83,7 +83,6 @@ function getComputerChoice() {
 			choice = "Scissors";
 			break;
 	}
-	console.log(choice);
 
 	return choice;
 }
@@ -153,7 +152,6 @@ function playRound(humanChoice, computerChoice) {
 	}
 	subtitle.textContent = winnerMessage;
 	setScoreText();
-	console.log(winnerMessage);
 	determineWinner();
 }
 

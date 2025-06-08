@@ -9,17 +9,43 @@
 const startBtn = document.querySelector("#start");
 const title = document.querySelector("#title");
 const subtitle = document.querySelector("#subtitle");
-let humanScore = 0;
-let computerScore = 0;
+const buttonDiv = document.querySelector("#buttons");
+let humanScore = 4;
+let computerScore = 4;
 
 startBtn.addEventListener("click", startGame);
 
+function removePlayfield() {
+	const rockBtn = document.querySelector("#rockbtn");
+	const paperBtn = document.querySelector("#paperbtn");
+	const scissorsBtn = document.querySelector("#scissorsbtn");
+
+	rockBtn.remove();
+	paperBtn.remove();
+	scissorsBtn.remove();
+
+	const restartBtn = document.createElement("button");
+	restartBtn.textContent = "Restart Game";
+	buttonDiv.appendChild(restartBtn);
+
+	restartBtn.addEventListener("click", function () {
+		startGame();
+		restartBtn.remove();
+	});
+}
+
 function startGame() {
+	humanScore = 0;
+	computerScore = 0;
+	subtitle.style.color = "black";
+	title.style.color = "black";
 	startBtn.remove();
-	const buttonDiv = document.querySelector("#buttons");
 	const rockBtn = document.createElement("button");
+	rockBtn.setAttribute("id", "rockbtn");
 	const paperBtn = document.createElement("button");
+	paperBtn.setAttribute("id", "paperbtn");
 	const scissorsBtn = document.createElement("button");
+	scissorsBtn.setAttribute("id", "scissorsbtn");
 
 	rockBtn.textContent = "Rock";
 	paperBtn.textContent = "Paper";
@@ -40,7 +66,7 @@ function startGame() {
 	});
 
 	setScoreText();
-	subtitle.textContent = "";
+	subtitle.textContent = "Make a choice to start.";
 }
 
 function getComputerChoice() {
@@ -60,31 +86,6 @@ function getComputerChoice() {
 	console.log(choice);
 
 	return choice;
-}
-
-function playGame() {
-	const roundAmount = 5;
-	let humanScore = 0;
-	let computerScore = 0;
-	for (let currentRound = 1; currentRound <= roundAmount; currentRound++) {
-		const humanSelection = getHumanChoice();
-		const computerSelection = getComputerChoice();
-
-		playRound(humanSelection, computerSelection);
-		/*
-        if (currentRound == 5) {
-            if (humanScore > computerScore) {
-                console.log(`You win with a score of ${humanScore} to ${computerScore}`);
-            } else if (humanScore < computerScore) {
-                console.log(`You lose with a score of ${computerScore} to ${humanScore}`);
-            } else if (humanScore == computerScore) {
-                console.log(`It's a draw with a score of ${humanScore} to ${computerScore}`);
-            }
-        
-        
-        }
-        */
-	}
 }
 
 function playRound(humanChoice, computerChoice) {
@@ -137,21 +138,44 @@ function playRound(humanChoice, computerChoice) {
 	switch (winner) {
 		case "human":
 			++humanScore;
+			subtitle.style.color = "green";
 			winnerMessage = `You win!\n${humanChoice.toUpperCase()} beats ${computerChoice.toUpperCase()}!`;
 			break;
 		case "computer":
 			++computerScore;
+			subtitle.style.color = "red";
 			winnerMessage = `You lose!\n${computerChoice.toUpperCase()} beats ${humanChoice.toUpperCase()}!`;
 			break;
 		case "draw":
+			subtitle.style.color = "black";
 			winnerMessage = `It's a draw!`;
 			break;
 	}
 	subtitle.textContent = winnerMessage;
 	setScoreText();
 	console.log(winnerMessage);
+	determineWinner();
 }
 
 function setScoreText() {
 	title.textContent = `Human: ${humanScore} | Computer: ${computerScore}`;
+}
+
+function determineWinner() {
+	if (humanScore >= 5 || computerScore >= 5) {
+		if (humanScore == 5) {
+			title.textContent = `You Won!`;
+			title.style.color = "green";
+			subtitle.textContent = `With a score of ${humanScore} to ${computerScore}.`;
+
+			removePlayfield();
+		}
+		if (computerScore === 5) {
+			title.textContent = `You Lost!`;
+			title.style.color = "red";
+			subtitle.textContent = `With a score of ${computerScore} to ${humanScore}.`;
+
+			removePlayfield();
+		}
+	}
 }

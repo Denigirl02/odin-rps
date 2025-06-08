@@ -40,6 +40,7 @@ function startGame() {
 	});
 
 	setScoreText();
+	subtitle.textContent = "";
 }
 
 function getComputerChoice() {
@@ -56,6 +57,8 @@ function getComputerChoice() {
 			choice = "Scissors";
 			break;
 	}
+	console.log(choice);
+
 	return choice;
 }
 
@@ -86,6 +89,7 @@ function playGame() {
 
 function playRound(humanChoice, computerChoice) {
 	humanChoice = humanChoice.toLowerCase();
+
 	computerChoice = computerChoice.toLowerCase();
 	let winner = null;
 	let messageCode = null;
@@ -127,7 +131,7 @@ function playRound(humanChoice, computerChoice) {
 				break;
 		}
 	}
-	setScoreText();
+
 	// Set winning message, and assign points based on who won
 	let winnerMessage = "";
 	switch (winner) {
@@ -144,7 +148,7 @@ function playRound(humanChoice, computerChoice) {
 			break;
 	}
 	subtitle.textContent = winnerMessage;
-
+	setScoreText();
 	console.log(winnerMessage);
 }
 

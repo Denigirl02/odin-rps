@@ -133,16 +133,17 @@ function playRound(humanChoice, computerChoice) {
 	switch (winner) {
 		case "human":
 			++humanScore;
-			winnerMessage = `You win!\n${humanChoice.toUpperCase()} beats ${computerChoice.toUpperCase()}!\nCurrent Score: Human: ${humanScore} | Computer ${computerScore}`;
+			winnerMessage = `You win!\n${humanChoice.toUpperCase()} beats ${computerChoice.toUpperCase()}!`;
 			break;
 		case "computer":
 			++computerScore;
-			winnerMessage = `You lose!\n${computerChoice.toUpperCase()} beats ${humanChoice.toUpperCase()}!\nCurrent Score: Human: ${humanScore} | Computer ${computerScore}`;
+			winnerMessage = `You lose!\n${computerChoice.toUpperCase()} beats ${humanChoice.toUpperCase()}!`;
 			break;
 		case "draw":
-			winnerMessage = `It's a draw!\nCurrent Score: Human: ${humanScore} | Computer ${computerScore}`;
+			winnerMessage = `It's a draw!`;
 			break;
 	}
+	subtitle.textContent = winnerMessage;
 
 	console.log(winnerMessage);
 }

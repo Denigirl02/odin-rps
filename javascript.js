@@ -6,21 +6,41 @@
 // restart game
 
 //playGame();
-const rockBtn = document.querySelector("#rock");
-const paperBtn = document.querySelector("#paper");
-const scissorsBtn = document.querySelector("#scissors");
+const startBtn = document.querySelector("#start");
+const title = document.querySelector("#title");
+const subtitle = document.querySelector("#subtitle");
 let humanScore = 0;
 let computerScore = 0;
 
-rockBtn.addEventListener("click", function () {
-	playRound("Rock", getComputerChoice());
-});
-paperBtn.addEventListener("click", function () {
-	playRound("Paper", getComputerChoice());
-});
-scissorsBtn.addEventListener("click", function () {
-	playRound("Scissors", getComputerChoice());
-});
+startBtn.addEventListener("click", startGame);
+
+function startGame() {
+	startBtn.remove();
+	const buttonDiv = document.querySelector("#buttons");
+	const rockBtn = document.createElement("button");
+	const paperBtn = document.createElement("button");
+	const scissorsBtn = document.createElement("button");
+
+	rockBtn.textContent = "Rock";
+	paperBtn.textContent = "Paper";
+	scissorsBtn.textContent = "Scissors";
+
+	buttonDiv.appendChild(rockBtn);
+	buttonDiv.appendChild(paperBtn);
+	buttonDiv.appendChild(scissorsBtn);
+
+	rockBtn.addEventListener("click", function () {
+		playRound("Rock", getComputerChoice());
+	});
+	paperBtn.addEventListener("click", function () {
+		playRound("Paper", getComputerChoice());
+	});
+	scissorsBtn.addEventListener("click", function () {
+		playRound("Scissors", getComputerChoice());
+	});
+
+	setScoreText();
+}
 
 function getComputerChoice() {
 	let choice = "";
@@ -107,7 +127,7 @@ function playRound(humanChoice, computerChoice) {
 				break;
 		}
 	}
-
+	setScoreText();
 	// Set winning message, and assign points based on who won
 	let winnerMessage = "";
 	switch (winner) {
@@ -125,4 +145,8 @@ function playRound(humanChoice, computerChoice) {
 	}
 
 	console.log(winnerMessage);
+}
+
+function setScoreText() {
+	title.textContent = `Human: ${humanScore} | Computer: ${computerScore}`;
 }
